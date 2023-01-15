@@ -18,8 +18,17 @@ namespace Requests
     public class LightsRequest
     {
         private string url;
+        private Dictionary<int, string> roomMap = new Dictionary<int, string>(){
+            {0, "master bedroom south"},
+            {1, "bathroom"},
+            {2, "kids bedroom"},
+            {3, "living room"},
+            {4, "kitchen"},
+            {5, "master bedroom north"}
+};
         public class LightUpdateData
         {
+            public string room;
             public string state;
         }
 
@@ -50,6 +59,7 @@ namespace Requests
             // form.AddField("state", light);
             var lightData = new LightUpdateData();
             lightData.state = state ? "on" : "off";
+            lightData.room = roomMap[light];
             string json = JsonUtility.ToJson(lightData);
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
 
@@ -151,7 +161,7 @@ namespace Requests
         {
             Debug.Log("Door Request Started");
             var doorData = new DoorUpdateData();
-            doorData.state = state ? "on" : "off";
+            doorData.state = state ? "open" : "closed";
             string json = JsonUtility.ToJson(doorData);
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
 
