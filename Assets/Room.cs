@@ -9,6 +9,7 @@ public class Room : MonoBehaviour
     public Material trans;
     public GameObject xrOrigin;
     BoxCollider box;
+    public GameObject XROrigin;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,13 +26,13 @@ public class Room : MonoBehaviour
         
         
     }
-    public void portToRoom(){
-        // xrOrigin.transform.position = box.center;
-        Debug.Log("PORT!");
-
-    }
+   
     public void hoverEnterRoom(){
-        renderer.material = trans;
+        if(XROrigin.transform.position==Vector3.zero){
+            renderer.material = trans;
+        }else{
+            renderer.material=orig;
+        }
     
     }
     public void hoverExitRoom(){

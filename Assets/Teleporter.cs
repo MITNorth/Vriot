@@ -8,6 +8,7 @@ public class Teleporter : MonoBehaviour
     // Start is called before the first frame update
     ActionBasedController controller; 
     public GameObject xrOrigin;
+    private bool changed = false;
     void Start()
     {
         controller = GetComponent<ActionBasedController>();
@@ -22,12 +23,31 @@ public class Teleporter : MonoBehaviour
         float trigger =(controller.activateAction.action.ReadValue<float>());
         if(trigger!=0){
             RaycastHit hit;
-            if(Physics.Raycast(transform.position,transform.TransformDirection(Vector3.forward),out hit, 30)){
-                xrOrigin.transform.position = hit.collider.transform.GetChild(0).transform.position;
+            int layerMask = 1<<6;
+            if(xrOrigin.transform.position==Vector3.zero){
+                layerMask = ~layerMask;
+
+            }
+            if(Physics.Raycast(transform.position,transform.TransformDirection(Vector3.forward),out hit, 30,layerMask)){
+                if(layerMask == 1<<6){
+                    if (!changed)
+                        hit.collider.gameObject.GetComponent<Light>().enabled = !hit.collider.gameObject.GetComponent<Light>().enabled;
+                    changed = true;
+
+
+
+                }else{
+
+                    xrOrigin.transform.position = hit.collider.transform.GetChild(0).transform.position;
+
+                }
+
             }
             else{
                 Debug.Log("Did not Hit");
             }
+        } else {
+            changed = false;
         }
         
     }
