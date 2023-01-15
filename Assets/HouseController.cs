@@ -30,6 +30,7 @@ public class HouseController : MonoBehaviour
         }
 
         transform.position+=new Vector3(0,0,zAxis);
+        transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(transform.position.z, 10f, 60f));
 
 
         
