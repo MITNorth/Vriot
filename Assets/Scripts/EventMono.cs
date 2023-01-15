@@ -35,6 +35,14 @@ public class EventMono : MonoBehaviour
     lock (_queueLock) {
         foreach (String next_event in event_queue.ToArray())  {;
             Debug.Log($"event: {next_event}");
+            if(next_event.Contains("onPress")){
+              GlobalContainer.instance.notifs.GetComponent<TMPro.TMP_Text>().text = "Doorbell";
+
+            }else if(next_event.Contains("intruder")){
+              GlobalContainer.instance.notifs.GetComponent<TMPro.TMP_Text>().text = "Intruder";
+
+
+            }
         }
         event_queue.Clear();
     }
