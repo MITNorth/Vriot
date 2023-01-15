@@ -7,6 +7,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using UnityEngine;
 using System.Threading.Tasks;
+using System.Net.Sockets;
+
 
 namespace EvtSource
 {
@@ -88,96 +90,120 @@ namespace EvtSource
         {
             try
             {
-                if (string.Empty != LastEventId)
-                {
-                    if (Hc.DefaultRequestHeaders.Contains("Last-Event-Id"))
-                    {
-                        Hc.DefaultRequestHeaders.Remove("Last-Event-Id");
-                    }
+                // Socket try 
+                TcpClient socketConnection = new TcpClient(Uri.ToString(), 80);
+                Debug.Log(Uri.ToString());
+                Byte[] bytes = new Byte[4096];
+                // while (true) {
+                //     // Get a stream object for reading
+                //     using (NetworkStream stream = socketConnection.GetStream()) {
+                //         int length;
+                //         // Read incomming stream into byte arrary.
+                //         while ((length = stream.Read(bytes, 0, bytes.Length)) != 0) {
+                //             var incommingData = new byte[length];
+                //             Array.Copy(bytes, 0, incommingData, 0, length);
+                //             // Convert byte array to string message.
+                //             string serverMessage = Encoding.ASCII.GetString(incommingData);
+                //             Debug.Log("server message received as: " + serverMessage);
+                //         }
+                //     }
+                //     break;
+                // }
+
+
+                // if (string.Empty != LastEventId)
+                // {
+                //     if (Hc.DefaultRequestHeaders.Contains("Last-Event-Id"))
+                //     {
+                //         Hc.DefaultRequestHeaders.Remove("Last-Event-Id");
+                //     }
                     
-                    Hc.DefaultRequestHeaders.TryAddWithoutValidation("Last-Event-Id", LastEventId);
-                }
-                using (HttpResponseMessage response = await Hc.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead))
-                {
-                    response.EnsureSuccessStatusCode();
-                    if (response.Headers.TryGetValues("content-type", out IEnumerable<string> ctypes) || ctypes?.Contains("text/event-stream") == false)
-                    {
-                        throw new ArgumentException("Specified URI does not return server-sent events");
-                    }
+                //     Hc.DefaultRequestHeaders.TryAddWithoutValidation("Last-Event-Id", LastEventId);
+                // }
+                // using (HttpResponseMessage response = await Hc.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead))
+                // {
+                //     response.EnsureSuccessStatusCode();
+                //     if (response.Headers.TryGetValues("content-type", out IEnumerable<string> ctypes) || ctypes?.Contains("text/event-stream") == false)
+                //     {
+                //         throw new ArgumentException("Specified URI does not return server-sent events");
+                //     }
 
-                    Stream = await response.Content.ReadAsStreamAsync();
-                    using (var sr = new StreamReader(Stream))
-                    {
-                        string evt = DefaultEventType;
-                        string id = string.Empty;
-                        var data = new StringBuilder(string.Empty);
+                //     Stream = await response.Content.ReadAsStreamAsync();
+                //     using (var sr = new StreamReader(Stream))
+                //     {
+                //         string evt = DefaultEventType;
+                //         string id = string.Empty;
+                //         var data = new StringBuilder(string.Empty);
 
-                        while (true)
-                        {
-                            string line = await sr.ReadLineAsync();
-                            if (line == string.Empty)
-                            {
-                                // double newline, dispatch message and reset for next
-                                if (data.Length > 0)
-                                {
-                                    Debug.Log(data.ToString());
-                                    MessageReceived?.Invoke(this, new EventSourceMessageEventArgs(data.ToString().Trim(), evt, id));
-                                }
-                                data.Clear();
-                                id = string.Empty;
-                                evt = DefaultEventType;
-                                continue;
-                            }
-                            else if (line.First() == ':')
-                            {
-                                // Ignore comments
-                                continue;
-                            }
+                //         while (true)
+                //         {
+                //             Debug.Log("reading line by line");
+                //             string line = sr.ReadLine();
+                //             Debug.Log(line);
+                //             if (line == string.Empty)
+                //             {
+                //                 // double newline, dispatch message and reset for next
+                //                 if (data.Length > 0)
+                //                 {
+                //                     Debug.Log(data.ToString());
+                //                     MessageReceived?.Invoke(this, new EventSourceMessageEventArgs(data.ToString().Trim(), evt, id));
+                //                 }
+                //                 data.Clear();
+                //                 id = string.Empty;
+                //                 evt = DefaultEventType;
+                //                 continue;
+                //             }
+                //             else if (line.First() == ':')
+                //             {
+                //                 // Ignore comments
+                //                 continue;
+                //             }
 
-                            int dataIndex = line.IndexOf(':');
-                            string field;
-                            if (dataIndex == -1)
-                            {
-                                dataIndex = line.Length;
-                                field = line;
-                            }
-                            else
-                            {
-                                field = line.Substring(0, dataIndex);
-                                dataIndex += 1;
-                            }
+                //             int dataIndex = line.IndexOf(':');
+                //             string field;
+                //             if (dataIndex == -1)
+                //             {
+                //                 dataIndex = line.Length;
+                //                 field = line;
+                //             }
+                //             else
+                //             {
+                //                 field = line.Substring(0, dataIndex);
+                //                 dataIndex += 1;
+                //             }
 
-                            string value = line.Substring(dataIndex).Trim();
+                //             string value = line.Substring(dataIndex).Trim();
 
-                            switch (field)
-                            {
-                                case "event":
-                                    // Set event type
-                                    evt = value;
-                                    break;
-                                case "data":
-                                    // Append a line to data using a single \n as EOL
-                                    data.Append($"{value}\n");
-                                    break;
-                                case "retry":
-                                    // Set reconnect delay for next disconnect
-                                    int.TryParse(value, out ReconnectDelay);
-                                    break;
-                                case "id":
-                                    // Set ID
-                                    LastEventId = value;
-                                    id = LastEventId;
-                                    break;
-                                default:
-                                    // Ignore other fields
-                                    break;
-                            }
-                        }
-                    }
-                }
+                //             switch (field)
+                //             {
+                //                 case "event":
+                //                     // Set event type
+                //                     evt = value;
+                //                     break;
+                //                 case "data":
+                //                     // Append a line to data using a single \n as EOL
+                //                     data.Append($"{value}\n");
+                //                     break;
+                //                 case "retry":
+                //                     // Set reconnect delay for next disconnect
+                //                     int.TryParse(value, out ReconnectDelay);
+                //                     break;
+                //                 case "id":
+                //                     // Set ID
+                //                     LastEventId = value;
+                //                     id = LastEventId;
+                //                     break;
+                //                 default:
+                //                     // Ignore other fields
+                //                     break;
+                //             }
+                //         }
+                //     }
+                // }
             }
             catch (Exception ex)
             {
+			    Debug.Log("Socket exception: " + ex);         
                 Disconnect(ex);
             }
         }

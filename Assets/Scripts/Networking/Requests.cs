@@ -29,21 +29,7 @@ namespace Requests
         public LightsRequest()
         {
             url = Globals.API_URL + "/" + Globals.VERSION + "/" + Globals.PREAMBLE + "/" + "led_module_event";
-            source = new EventSourceReader(new Uri(url));
-            source.Disconnected += async (object sender, DisconnectEventArgs e) => {
-                Debug.Log($"Retry: {e.ReconnectDelay} - Error: {e.Exception}");
-                source.Start(); // Reconnect to the same URL
-            };
-            source.Start();
-
             Debug.Log("Lights Request Started");
-        }
-
-        public LightsRequest setEventHandler(EventHandler evtHandler)
-        {
-            source.MessageReceived += (object sender, EventSourceMessageEventArgs e) => evtHandler(sender, e);
-
-            return this;
         }
 
         private IEnumerator Post(UnityWebRequest req)

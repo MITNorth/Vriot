@@ -23,11 +23,6 @@ public class NetworkingTest : MonoBehaviour {
     private LightsRequest Light;
     void Start() {
         Light = new LightsRequest();
-        Light.setEventHandler(
-            (object sender, EventSourceMessageEventArgs e) => {
-                Debug.Log($"{e.Event} : {e.Message}");
-            }
-        );
         
 
 
