@@ -9,7 +9,7 @@ public static class Globals
 {
     public const string API_URL = "http://home.karatsubalabs.com";
     public const string VERSION = "v1beta";
-    public const string PREAMBLE = "client/device";
+    public const string PREAMBLE = "event/device";
 
 }
 
@@ -26,12 +26,14 @@ namespace Requests
             {4, "kitchen"},
             {5, "master bedroom north"}
 };
+        [Serializable]
         public class LightUpdateData
         {
             public string room;
             public string state;
         }
 
+        [Serializable]
         public class RequestData
         {
             public LightUpdateData[] updates;
@@ -39,7 +41,7 @@ namespace Requests
 
         public LightsRequest()
         {
-            url = Globals.API_URL + "/" + Globals.VERSION + "/" + Globals.PREAMBLE + "/" + "led_module_event";
+            url = Globals.API_URL + "/" + Globals.VERSION + "/" + Globals.PREAMBLE + "/" + "light_module_event";
             Debug.Log("Lights Request Started");
         }
 
