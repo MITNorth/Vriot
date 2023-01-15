@@ -34,6 +34,7 @@ public class Teleporter : MonoBehaviour
                 if(layerMask == 1<<6){
                     if (!changed) {
                         hit.collider.gameObject.GetComponent<Light>().enabled = !hit.collider.gameObject.GetComponent<Light>().enabled;
+                        hit.collider.gameObject.GetComponent<AudioSource>().Play();
                         int roomNumber = int.Parse(hit.collider.gameObject.transform.parent.gameObject.name);
                         
                         StartCoroutine(lr.UpdateRequest(roomNumber, hit.collider.gameObject.GetComponent<Light>().enabled));
