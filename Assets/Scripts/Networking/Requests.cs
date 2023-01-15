@@ -189,29 +189,6 @@ namespace Requests
 
     }
 
-    public class CustomRequest
-    {
-        private string url;
-        public CustomRequest()
-        {
-        }
-
-        public IEnumerator GoodNight()
-        {
-            Debug.Log("Good night!");
-            Debug.Log("Turning off lights...");
-            LightsRequest l = new LightsRequest();
-            for (int i = 0; i < 6; i++) {
-                StartCoroutine(l.UpdateRequest(i, false));
-            }
-
-            Debug.Log("Turning on alarm");
-            AlarmRequest a = new AlarmRequest();
-            a.ToggleAlarm(true);
-        }
-
-    }
-
 
     public class TempSensor
     {
