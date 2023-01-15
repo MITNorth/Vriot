@@ -57,10 +57,12 @@ namespace Requests
         public IEnumerator UpdateRequest(int light, bool state)
         {
             // form.AddField("state", light);
-            var lightData = new LightUpdateData();
-            lightData.state = state ? "on" : "off";
-            lightData.room = roomMap[light];
-            string json = JsonUtility.ToJson(lightData);
+            LightUpdateData[] values;
+            values = new LightUpdateData[1];
+            values[0] = new LightUpdateData();
+            values[0].state = state ? "on" : "off";
+            values[0].room = roomMap[light];
+            string json = JsonUtility.ToJson(values);
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
 
             var request = UnityWebRequest.Post(url, new WWWForm());
