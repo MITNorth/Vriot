@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 97d5703379cc1354d88b3111efa039a4, type: 2}
+  - {fileID: 2100000, guid: 8ab813c16069c07489469c63f325ea30, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,8 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65e51384353499a4a92a26a49011fdcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat_primary: {fileID: 2100000, guid: 97d5703379cc1354d88b3111efa039a4, type: 2}
-  mat_secondary: {fileID: 2100000, guid: 97d5703379cc1354d88b3111efa039a4, type: 2}
+  mat_primary: {fileID: 2100000, guid: 8ab813c16069c07489469c63f325ea30, type: 2}
+  mat_secondary: {fileID: 2100000, guid: 8ab813c16069c07489469c63f325ea30, type: 2}
 --- !u!1 &1364753455097570462
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,14 +251,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445048539754248755}
-  m_LocalRotation: {x: 0.049023293, y: 0.94337934, z: -0.10789849, w: -0.3098226}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.057017244, y: 0.86556, z: -0.16650467, w: -0.46886146}
+  m_LocalPosition: {x: 0, y: -0.000000007450581, z: 0}
   m_LocalScale: {x: 0.040000003, y: 0.04, z: 0.04}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7350910114076316567}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 9.974, y: 217.176, z: 9.311}
+  m_LocalEulerAnglesHint: {x: 13.578, y: 238.707, z: 15.199}
 --- !u!33 &1445048539754248759
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 212db3731b0af9743a730f6ca722f298, type: 2}
+  - {fileID: 2100000, guid: 0ad07205b0fb8164c801a7f61fd714f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -334,8 +334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65e51384353499a4a92a26a49011fdcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat_primary: {fileID: 2100000, guid: 212db3731b0af9743a730f6ca722f298, type: 2}
-  mat_secondary: {fileID: 2100000, guid: f3b7749550e2bc047b8ea915cc2da533, type: 2}
+  mat_primary: {fileID: 2100000, guid: 0ad07205b0fb8164c801a7f61fd714f9, type: 2}
+  mat_secondary: {fileID: 2100000, guid: a5426e5b6f5d492439f39686268756f0, type: 2}
 --- !u!1 &1694287068625826057
 GameObject:
   m_ObjectHideFlags: 0
