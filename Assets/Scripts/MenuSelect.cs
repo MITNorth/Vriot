@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Requests;
 
 public class MenuSelect : MonoBehaviour {
     private bool initialState = true;
@@ -23,6 +24,9 @@ public class MenuSelect : MonoBehaviour {
             } else if (transform.gameObject.name == "Sphere B") { // Do Custom Command
                 initialState = !initialState;
             } else if (transform.gameObject.name == "Sphere C") { // Home Security
+                initialState = !initialState;
+                AlarmRequest alarmRequest = new AlarmRequest(); 
+                alarmRequest.ToggleAlarm(initialState);
 
             } else if (transform.gameObject.name == "Sphere D") { // Temperature
 
