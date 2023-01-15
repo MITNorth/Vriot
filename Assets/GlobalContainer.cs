@@ -7,6 +7,8 @@ public class GlobalContainer : MonoBehaviour
     public GameObject statsPanel;
     public GameObject tempPanel;
     public GameObject rc;
+
+    public GameObject notifs;
     
     public static GlobalContainer instance;
     // Start is called before the first frame update
