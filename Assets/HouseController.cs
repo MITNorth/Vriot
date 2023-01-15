@@ -19,10 +19,17 @@ public class HouseController : MonoBehaviour
     {
         
         float xAxis = controller.rotateAnchorAction.action.ReadValue<Vector2>().x;
+        float yAxis = controller.rotationAction.action.ReadValue<Vector2>().x;
 
         if(xAxis!=0){
             transform.Rotate(new Vector3(0,Mathf.Sign(xAxis),0));
         }
+        if(yAxis!=0){
+            transform.Rotate(new Vector3(0,0,Mathf.Sign(yAxis)));
+        }
+        transform.Rotate(0,0,Mathf.LerpAngle(0,0,transform.rotation.eulerAngles.z));
+
+
         
     }
     void highlight(){
