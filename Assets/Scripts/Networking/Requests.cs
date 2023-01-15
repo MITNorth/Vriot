@@ -9,7 +9,7 @@ public static class Globals
 {
     public const string API_URL = "http://home.karatsubalabs.com";
     public const string VERSION = "v1beta";
-    public const string PREAMBLE = "event/device";
+    public const string PREAMBLE = "client/device";
 
 }
 
@@ -34,7 +34,7 @@ namespace Requests
 
         public class RequestData
         {
-            public LightUpdateData updates;
+            public LightUpdateData[] updates;
         }
 
         public LightsRequest()
@@ -67,13 +67,13 @@ namespace Requests
             values[0] = new LightUpdateData();
             values[0].state = state ? "on" : "off";
             values[0].room = roomMap[light];
-            var data = new RequestData()
+            var data = new RequestData();
             data.updates = values;
             string json = JsonUtility.ToJson(data);
+            Debug.Log(json);
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
 
             var request = UnityWebRequest.Post(url, new WWWForm());
-            Debug.Log(url);
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
             request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
             request.SetRequestHeader("x-api-key", "API_KEY");
