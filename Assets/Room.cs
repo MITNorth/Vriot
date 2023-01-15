@@ -26,7 +26,8 @@ public class Room : MonoBehaviour
         
     }
     public void portToRoom(){
-        xrOrigin.transform.position = box.center;
+        // xrOrigin.transform.position = box.center;
+        Debug.Log("PORT!");
 
     }
     public void hoverEnterRoom(){
