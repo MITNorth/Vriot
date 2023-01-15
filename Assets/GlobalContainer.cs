@@ -8,7 +8,8 @@ public class GlobalContainer : MonoBehaviour
     public GameObject tempPanel;
     public GameObject rc;
 
-    public GameObject notifs;
+    public GameObject intruder;
+    public GameObject doorbell;
     
     public static GlobalContainer instance;
     // Start is called before the first frame update
