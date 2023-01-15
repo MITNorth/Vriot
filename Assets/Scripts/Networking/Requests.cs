@@ -32,6 +32,11 @@ namespace Requests
             public string state;
         }
 
+        public class RequestData
+        {
+            public LightUpdateData updates;
+        }
+
         public LightsRequest()
         {
             url = Globals.API_URL + "/" + Globals.VERSION + "/" + Globals.PREAMBLE + "/" + "led_module_event";
@@ -62,7 +67,9 @@ namespace Requests
             values[0] = new LightUpdateData();
             values[0].state = state ? "on" : "off";
             values[0].room = roomMap[light];
-            string json = JsonUtility.ToJson(values);
+            var data = new RequestData()
+            data.updates = values;
+            string json = JsonUtility.ToJson(data);
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
 
             var request = UnityWebRequest.Post(url, new WWWForm());
